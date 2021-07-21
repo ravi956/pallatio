@@ -36,6 +36,33 @@ function generatePallete() {
   }
 }
 
+const colorNameDisplayHandler = (event) => {
+  if (document.getElementsByClassName('pallete_color').length) {
+    const x = event.clientX;
+    const y = event.clientY;
+    const currentColorDiv = document.elementFromPoint(x, y);
+    if (currentColorDiv.classList.contains('pallete_color')) {
+      const rgbColor = currentColorDiv.style.backgroundColor;
+      const colorName = document.createElement('div');
+      colorName.id = 'colorName';
+      currentColorDiv.appendChild(colorName);
+      colorName.innerHTML = rgbColor;
+    }
+  }
+};
+
+const colorNameRemovalHandler = (event) => {
+  if (document.getElementsByClassName('pallete_color').length) {
+    const colorName = getElementById('colorName');
+    const x = event.clientX;
+    const y = event.clientY;
+    const currentColorDiv = document.elementFromPoint(x, y);
+    if (colorName && currentColorDiv !== colorName) {
+      colorName.remove();
+    }
+  }
+};
+
 getElementById('incrementColors').addEventListener(
   'click',
   incrementNumberOfColors
@@ -46,3 +73,13 @@ getElementById('decrementColors').addEventListener(
 );
 
 getElementById('generateColors').addEventListener('click', generatePallete);
+
+getElementById('palleteContainer').addEventListener(
+  'mouseover',
+  colorNameDisplayHandler
+);
+
+getElementById('palleteContainer').addEventListener(
+  'mouseout',
+  colorNameRemovalHandler
+);

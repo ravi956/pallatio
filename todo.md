@@ -1,0 +1,7 @@
+- [ ] show color code on expansion
+- [ ] copy color code on code click
+- [ ] undo ability
+- [ ] copy css code for the scheme
+- [ ] save button for saving current scheme into localstorage
+- [ ] lock any number of colors
+- [ ] error on going less than locked color

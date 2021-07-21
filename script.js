@@ -36,13 +36,31 @@ function generatePallete() {
   }
 }
 
+const decToHex = (dec) => {
+  let hex = Number(dec).toString(16);
+  if (hex.length === 1) {
+    hex = '0' + hex;
+  }
+  return hex;
+};
+
+const rgbToHexCoverter = (rgb) => {
+  rgb = rgb.slice(4, rgb.length - 1);
+  const [red, green, blue] = rgb.split(', ');
+  const hexRed = decToHex(red);
+  const hexGreen = decToHex(green);
+  const hexBlue = decToHex(blue);
+
+  return `#${hexRed}${hexGreen}${hexBlue}`;
+};
+
 const colorNameDisplayHandler = (event) => {
   if (document.getElementsByClassName('pallete_color').length) {
     const x = event.clientX;
     const y = event.clientY;
     const currentColorDiv = document.elementFromPoint(x, y);
     if (currentColorDiv.classList.contains('pallete_color')) {
-      const rgbColor = currentColorDiv.style.backgroundColor;
+      const rgbColor = rgbToHexCoverter(currentColorDiv.style.backgroundColor);
       const colorName = document.createElement('div');
       colorName.id = 'colorName';
       currentColorDiv.appendChild(colorName);

@@ -38,6 +38,9 @@ body {
 #colorName {
   width: 70%;
   height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 12px;
   background-color: #f8edeb;
 }

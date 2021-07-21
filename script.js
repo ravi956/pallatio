@@ -29,6 +29,9 @@ function decrementNumberOfColors() {
 
 function generatePallete() {
   const palleteContainer = getElementById('palleteContainer');
+  if (palleteContainer.classList.contains('initialize')) {
+    palleteContainer.classList.remove('initialize');
+  }
   palleteContainer.innerHTML = '';
   for (let count = 0; count < getCurrentNumberOfColors(); count++) {
     const newPalleteColor = getPalleteColorDiv(getRandomColor());

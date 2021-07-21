@@ -41,8 +41,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: large;
+  font-weight: 600;
   border-radius: 12px;
   background-color: #f8edeb;
+}
+
+.initialize {
+  font-size: large;
+  font-weight: 600;
+  border-radius: 12px;
+  background-color: goldenrod;
 }
 
 .option_div {

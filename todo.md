@@ -1,5 +1,5 @@
 - [x] show color code on expansion
-- [ ] copy color code on code click
+- [x] copy color code on code click
 - [ ] undo ability
 - [ ] copy css code for the scheme
 - [ ] save button for saving current scheme into localstorage

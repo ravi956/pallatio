@@ -62,12 +62,18 @@ const colorNameDisplayHandler = (event) => {
     const x = event.clientX;
     const y = event.clientY;
     const currentColorDiv = document.elementFromPoint(x, y);
+
     if (currentColorDiv.classList.contains('pallete_color')) {
+      currentColorDiv.style.cursor = 'pointer';
       const rgbColor = rgbToHexCoverter(currentColorDiv.style.backgroundColor);
       const colorName = document.createElement('div');
       colorName.id = 'colorName';
       currentColorDiv.appendChild(colorName);
       colorName.innerHTML = rgbColor;
+      currentColorDiv.addEventListener('click', () => {
+        copyToClipboard(rgbColor);
+        colorName.innerHTML = 'Copied!';
+      });
     }
   }
 };
@@ -82,6 +88,18 @@ const colorNameRemovalHandler = (event) => {
       colorName.remove();
     }
   }
+};
+
+const copyToClipboard = (str) => {
+  const el = document.createElement('textarea');
+  el.value = str;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
 };
 
 getElementById('incrementColors').addEventListener(

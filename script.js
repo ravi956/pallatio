@@ -1,6 +1,8 @@
 const getElementById = (id) => document.getElementById(id);
 const getCurrentNumberOfColors = () =>
   Number(getElementById('numberOfColors').innerText);
+const colorPalleteStates = [];
+let palleteNumber = -1;
 
 const getRandomColor = () => {
   const red = Math.random() * 256;
@@ -33,10 +35,18 @@ function generatePallete() {
     palleteContainer.classList.remove('initialize');
   }
   palleteContainer.innerHTML = '';
+  const newPalleteColorState = document.createElement('div');
   for (let count = 0; count < getCurrentNumberOfColors(); count++) {
-    const newPalleteColor = getPalleteColorDiv(getRandomColor());
+    const bgColor = getRandomColor();
+    const newPalleteColor = getPalleteColorDiv(bgColor);
+    const copyPalleteColor = getPalleteColorDiv(bgColor);
     palleteContainer.appendChild(newPalleteColor);
+    newPalleteColorState.appendChild(copyPalleteColor);
   }
+
+  colorPalleteStates.length = palleteNumber + 1;
+  colorPalleteStates.push(newPalleteColorState);
+  palleteNumber++;
 }
 
 const decToHex = (dec) => {
@@ -102,6 +112,47 @@ const copyToClipboard = (str) => {
   document.body.removeChild(el);
 };
 
+const undoHandler = () => {
+  if (colorPalleteStates.length === 0) {
+    alert(
+      'There is no previous state, please click generate to get new color pallete!!!'
+    );
+    return;
+  } else if (palleteNumber == -1) {
+    alert(
+      'There is no previous state, please click generate to get new color pallete or click redo to get next state if it exists!!!'
+    );
+    return;
+  }
+  palleteNumber--;
+  const palleteContainer = getElementById('palleteContainer');
+  if (palleteNumber === -1) {
+    const initialPara = document.createElement('p');
+    initialPara.innerHTML = 'Please Select Number of Colors and Click Generate';
+    palleteContainer.innerHTML = '';
+    palleteContainer.appendChild(initialPara);
+    palleteContainer.classList.add('initialize');
+    return;
+  }
+  palleteContainer.innerHTML = colorPalleteStates[palleteNumber].innerHTML;
+  getElementById('numberOfColors').innerHTML =
+    document.getElementsByClassName('pallete_color').length;
+};
+
+const redoHandler = () => {
+  if (palleteNumber === colorPalleteStates.length - 1) {
+    alert(
+      'There is no next state, please click generate to get new color pallete or click undo to get previous color pallete if it exists!!!'
+    );
+    return;
+  }
+  palleteNumber++;
+  const palleteContainer = getElementById('palleteContainer');
+  palleteContainer.innerHTML = colorPalleteStates[palleteNumber].innerHTML;
+  getElementById('numberOfColors').innerHTML =
+    document.getElementsByClassName('pallete_color').length;
+};
+
 getElementById('incrementColors').addEventListener(
   'click',
   incrementNumberOfColors
@@ -122,3 +173,6 @@ getElementById('palleteContainer').addEventListener(
   'mouseout',
   colorNameRemovalHandler
 );
+
+getElementById('undo').addEventListener('click', undoHandler);
+getElementById('redo').addEventListener('click', redoHandler);

@@ -65,6 +65,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 .option_div button {
   width: 40px;
@@ -81,7 +82,8 @@ body {
   font-weight: 500;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
-#generateColors {
+#generateColors,
+#copyPallete {
   height: 40px;
   border-radius: 12px;
   border: none;

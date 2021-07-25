@@ -83,6 +83,9 @@ const colorNameDisplayHandler = (event) => {
       currentColorDiv.addEventListener('click', () => {
         copyToClipboard(rgbColor);
         colorName.innerHTML = 'Copied!';
+        setInterval(() => {
+          colorName.innerHTML = rgbColor;
+        }, 1500);
       });
     }
   }
@@ -153,6 +156,32 @@ const redoHandler = () => {
     document.getElementsByClassName('pallete_color').length;
 };
 
+const copyPalleteHandler = () => {
+  if (palleteNumber == -1) {
+    alert(
+      'There is no color pallete on the screen, if you have generated a color please click redo button or click generate to get a color pallete!!!'
+    );
+    return;
+  }
+  let colors = '';
+  const colorDivs =
+    colorPalleteStates[palleteNumber].getElementsByTagName('div');
+  const colorArray = [];
+  for (const colordiv of colorDivs) {
+    colorArray.push(rgbToHexCoverter(colordiv.style.backgroundColor));
+  }
+  for (let i = 0; i < colorArray.length; i++) {
+    colors += `${'\n' + '\t'}--color-${i + 1} : ${colorArray[i]};`;
+  }
+  const palleteString = `:root {
+    /* usage => var(--color-{number}) */${colors}${'\n'}}`;
+  copyToClipboard(palleteString);
+  document.querySelector('.title').innerText = 'Copied!';
+  setInterval(() => {
+    document.querySelector('.title').innerText = 'PALLATIO';
+  }, 1500);
+};
+
 getElementById('incrementColors').addEventListener(
   'click',
   incrementNumberOfColors
@@ -176,3 +205,4 @@ getElementById('palleteContainer').addEventListener(
 
 getElementById('undo').addEventListener('click', undoHandler);
 getElementById('redo').addEventListener('click', redoHandler);
+getElementById('copyPallete').addEventListener('click', copyPalleteHandler);
